@@ -1,18 +1,24 @@
-
-
 """
-port scanner
+FOR EDUCATIONAL PURPOSES ONLY.
+AKA : there is nothing fancy here and will break easily if you try.
 
-python portscanner.py -host=localhost -port=5000
-Scanning host: localhost port: 5000
-Port: 5000 is open
 
+Inspired by John Crickett from Coding Challenges.
+Coding Challenge #45 - Port Scanner.
+Linkedin : https://www.linkedin.com/in/johncrickett/
+
+usage:
+    python portscanner.py -host=localhost -port=5000
+    * to scan multiple hosts
+    python portscanner.py -host=localhost,localhost1
+    * to scan on multiple hosts via ip address. example : 192.168.0.1, 192.168.0.2 ... 192.168.0.255
+    python portscanner.py -host='localhost,192.168.0.*'
 """
 
 import click
 import socket
 import time
-import random
+
 
 @click.command()
 @click.option("-host")
@@ -22,14 +28,11 @@ def port_scanner(host, port):
     host_list = host.split(',')
 
     def scanner(input_host, input_port):
-        # rand_num = random.randrange(10000)
+        #TODO
+        # Need to implement half-open scan by sending SYN packet.
+        # However, MACOS has no AF_PACKET. Don't know why, too lazy to check in.
+        # Might do it later, Hence this comment.
         # sock = socket.socket(socket.AF_PACKET, socket.SOCK_RAW)
-        # sock.bind(("en1", 0))
-        # sock.send(rand_num)
-        # sock.settimeout(1)  # quickly checks if port is open
-        # message = sock.recv(4096)
-        # print('*******message: ', message)
-        # sock.close()
 
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.settimeout(1)  # quickly checks if port is open
@@ -69,32 +72,6 @@ def port_scanner(host, port):
             helper(each_host, port)
     end = time.time()
     print('time elapsed : ', end - start)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 if __name__ == "__main__":
